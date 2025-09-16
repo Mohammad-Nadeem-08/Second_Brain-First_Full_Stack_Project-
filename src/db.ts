@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import {model,Schema} from "mongoose";
-mongoose.connect("mongodb+srv://mohammadnadeem0807:Q5I0z6FrBiqCI0pI@cluster0.8ow6rnd.mongodb.net/");
+import { mongodb } from "./config.js";
+mongoose.connect(mongodb);
 console.log("DataBase is Connected");
 const UserSchema = new Schema({
     Username:{type:String,unique:true},
