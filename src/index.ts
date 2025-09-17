@@ -113,7 +113,7 @@ app.post("/api/v1/brain/share",userAuth,async (req,res)=>{
             await ExistingUser.save();
             res.send({
             message:"Successfully created the Sharable Link",
-            hash:"www.Second_Brain/api/v1/brain/"+hash
+            hash:hash
         })
         return
         }
@@ -124,7 +124,7 @@ app.post("/api/v1/brain/share",userAuth,async (req,res)=>{
         })
         res.send({
             message:"Successfully created the Sharable Link",
-            hash:"www.Second_Brain/api/v1/brain/"+hash
+            hash:hash
         })
     }
     else{
@@ -137,4 +137,26 @@ app.post("/api/v1/brain/share",userAuth,async (req,res)=>{
         })
     }
 })
+
+app.get("/api/v1/brain/:sharelink", async (req, res) => {
+    try {
+        const sharelink = req.params.sharelink;
+
+        const link = await LinkModel.findOne({ hash: sharelink });
+        if (!link) {
+            return res.status(404).send({ message: "Invalid share link" });
+        }
+
+        const content = await ContentModel.find({ UserId: link.UserId });
+        const user = await userModel.findById(link.UserId);
+
+        res.send({
+            username: user?.Username,
+            content: content
+        });
+    } catch (err) {
+        res.status(500).send({ message: "Server error", error: err});
+    }
+});
+
 app.listen(3000);

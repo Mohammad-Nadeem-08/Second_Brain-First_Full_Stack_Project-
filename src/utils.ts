@@ -1,5 +1,5 @@
 export const random = (length:number)=>{
-    const letters = "qwertyuiopasdfghklzxcvbnm1234567890@!#$%^&*(){}<>?/";
+    const letters = "qwertyuiopasdfghklzxcvbnm1234567890";
     const len = letters.length;
     let ans = "";
     for(let i = 0;i < length ;i++){
